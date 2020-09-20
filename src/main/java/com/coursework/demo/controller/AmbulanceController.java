@@ -35,7 +35,7 @@ public class AmbulanceController {
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "Get ship info by id")
+    @ApiOperation(value = "Get ambulance info by id")
     public ResponseEntity<AmbulanceDTO> get(@PathVariable("id") long id){
         Ambulance ambulance = ambulanceService.getById(id);
         return ResponseEntity.status(HttpStatus.OK).body(ambulanceMapper.convertToDto(ambulance));
