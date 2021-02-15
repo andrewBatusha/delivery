@@ -8,7 +8,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,13 +27,15 @@ public class Call implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String order;
+    @OneToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name ="order_id")
+    private Order order;
 
     @ManyToOne
     @JoinColumn(name = "deliveryman_id")
     private DeliveryMan deliveryman;
 
-    @OneToOne(cascade= CascadeType.MERGE)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "client_id")
     private Client client;
 
