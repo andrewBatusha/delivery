@@ -12,8 +12,8 @@
 	<artifactId>demo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>Hospital</name>
-	<description>Hospital course work</description>
+	<name>Delivery</name>
+	<description>Delivery course work</description>
 
 	<properties>
 		<java.version>1.8</java.version>

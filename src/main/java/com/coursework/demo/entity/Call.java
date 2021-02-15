@@ -10,6 +10,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,20 +25,18 @@ import java.io.Serializable;
 public class Call implements Serializable {
 
     @Id
-    @GeneratedValue
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private String description;
+    private String order;
 
-    private String address;
+    @ManyToOne
+    @JoinColumn(name = "deliveryman_id")
+    private DeliveryMan deliveryman;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "brigade_id")
-    private Brigade brigade;
-
-    @OneToOne(fetch = FetchType.EAGER, cascade= CascadeType.MERGE)
-    @JoinColumn(name = "patient_id")
-    private Patient patient;
+    @OneToOne(cascade= CascadeType.MERGE)
+    @JoinColumn(name = "client_id")
+    private Client client;
 
     @Enumerated(EnumType.STRING)
     private CallStatus callStatus;

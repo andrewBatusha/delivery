@@ -6,10 +6,10 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @EnableSwagger2
-public class HospitalApplication {
+public class DeliveryApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(HospitalApplication.class, args);
+		SpringApplication.run(DeliveryApplication.class, args);
 	}
 
 }

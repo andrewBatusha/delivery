@@ -1,6 +1,6 @@
 package com.coursework.demo.entity;
 
-import com.coursework.demo.entity.enums.AmbulanceStatus;
+import com.coursework.demo.entity.enums.CarStatus;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +10,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -19,19 +20,19 @@ import java.io.Serializable;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "ambulances")
-public class Ambulance implements Serializable {
+@Table(name = "cars")
+public class Car implements Serializable {
 
     @Id
-    @GeneratedValue
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private String driver;
+    private String model;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade= CascadeType.MERGE)
-    @JoinColumn(name = "brigade_id")
-    private Brigade brigade;
+    @OneToOne( cascade= CascadeType.MERGE)
+    @JoinColumn(name = "deliveryman_id")
+    private DeliveryMan deliveryMan;
 
     @Enumerated(EnumType.STRING)
-    private AmbulanceStatus ambulanceStatus;
+    private CarStatus carStatus;
 }

@@ -4,6 +4,7 @@ import com.coursework.demo.entity.Call;
 import com.coursework.demo.repository.CallRepository;
 import com.coursework.demo.service.CallService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -26,8 +27,8 @@ public class CallServiceImpl implements CallService {
     }
 
     @Override
-    public List<Call> getAll() {
-        return (List<Call>) callRepository.findAll();
+    public List<Call> getAll(Pageable pageable) {
+        return callRepository.findAll(pageable).getContent();
     }
 
     @Override

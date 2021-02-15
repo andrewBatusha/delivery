@@ -1,6 +1,6 @@
 package com.coursework.demo.entity.enums;
 
-public enum AmbulanceStatus {
+public enum CarStatus {
     FREE,
     BUSY
 }

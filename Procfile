@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -cp target/classes:target/dependency/* com.coursework.demo.HospitalApplication
+web: java $JAVA_OPTS -cp target/classes:target/dependency/* com.coursework.demo.DeliveryApplication

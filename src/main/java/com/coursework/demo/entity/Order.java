@@ -1,6 +1,6 @@
 package com.coursework.demo.entity;
 
-import com.coursework.demo.entity.enums.Condition;
+import com.coursework.demo.entity.enums.PaymentOption;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
@@ -15,18 +16,19 @@ import java.io.Serializable;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "patients")
-public class Patient implements Serializable {
+@Table(name = "orders")
+public class Order implements Serializable {
+
     @Id
-    @GeneratedValue
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String name;
 
-    private String phoneNumber;
+    private Long price;
 
-    private int age;
+    private Long bonus;
 
     @Enumerated(EnumType.STRING)
-    private Condition condition;
+    PaymentOption paymentOption;
 }

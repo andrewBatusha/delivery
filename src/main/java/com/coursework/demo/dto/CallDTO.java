@@ -1,7 +1,7 @@
 package com.coursework.demo.dto;
 
-import com.coursework.demo.entity.Brigade;
-import com.coursework.demo.entity.Patient;
+import com.coursework.demo.entity.Client;
+import com.coursework.demo.entity.DeliveryMan;
 import com.coursework.demo.entity.enums.CallStatus;
 import lombok.Data;
 
@@ -9,13 +9,11 @@ import lombok.Data;
 public class CallDTO {
     private long id;
 
-    private String description;
+    private String order;
 
-    private String address;
+    private DeliveryMan deliveryman;
 
-    private Brigade brigade;
-
-    private Patient patient;
+    private Client client;
 
     private CallStatus callStatus;
 }

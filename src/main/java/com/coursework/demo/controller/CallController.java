@@ -7,6 +7,8 @@ import com.coursework.demo.service.CallService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,7 +24,7 @@ import java.util.List;
 
 @RestController
 @Api(tags = "Call API")
-@RequestMapping("/calls")
+@RequestMapping("/v1/calls")
 public class CallController {
 
     private final CallService callService;
@@ -36,7 +38,7 @@ public class CallController {
 
     @GetMapping("/{id}")
     @ApiOperation(value = "Get call info by id")
-    public ResponseEntity<CallDTO> get(@PathVariable("id") long id){
+    public ResponseEntity<CallDTO> get(@PathVariable("id") long id) {
         Call call = callService.getById(id);
         return ResponseEntity.status(HttpStatus.OK).body(callMapper.convertToDto(call));
     }
@@ -44,8 +46,8 @@ public class CallController {
 
     @GetMapping
     @ApiOperation(value = "Get the list of all calls")
-    public ResponseEntity<List<CallDTO>> list() {
-        return ResponseEntity.ok().body(callMapper.convertToDtoList(callService.getAll()));
+    public ResponseEntity<List<CallDTO>> getList(@PageableDefault(sort = {"id"}) Pageable pageable) {
+        return ResponseEntity.ok().body(callMapper.convertToDtoList(callService.getAll(pageable)));
     }
 
 
@@ -56,18 +58,22 @@ public class CallController {
         return ResponseEntity.status(HttpStatus.CREATED).body(callMapper.convertToDto(call));
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     @ApiOperation(value = "Update existing call by id")
-    public ResponseEntity<CallDTO> update(@RequestBody CallDTO callDTO) {
-        Call call = callService.update(callMapper.convertToEntity(callDTO));
-        return ResponseEntity.status(HttpStatus.OK).body(callMapper.convertToDto(call));
+    public ResponseEntity<CallDTO> update(@PathVariable("id") long id, @RequestBody CallDTO callDTO) {
+        if (id == callDTO.getId()) {
+            Call call = callService.update(callMapper.convertToEntity(callDTO));
+            return ResponseEntity.status(HttpStatus.OK).body(callMapper.convertToDto(call));
+        } else {
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
+        }
     }
 
     @DeleteMapping("/{id}")
     @ApiOperation(value = "Delete call by id")
-    public ResponseEntity delete(@PathVariable("id") long id){
+    public ResponseEntity delete(@PathVariable("id") long id) {
         Call call = callService.getById(id);
         callService.delete(call);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
