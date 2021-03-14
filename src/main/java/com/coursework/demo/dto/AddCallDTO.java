@@ -6,8 +6,7 @@ import com.coursework.demo.entity.enums.CallStatus;
 import lombok.Data;
 
 @Data
-public class CallDTO {
-    private Long id;
+public class AddCallDTO {
 
     private DeliveryMan deliveryman;
 

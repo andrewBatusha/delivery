@@ -5,10 +5,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,7 +29,9 @@ public class Car implements Serializable {
 
     private String model;
 
-    @OneToOne( cascade= CascadeType.MERGE)
+    private String colour;
+
+    @OneToOne(cascade= CascadeType.MERGE)
     @JoinColumn(name = "deliveryman_id")
     private DeliveryMan deliveryMan;
 

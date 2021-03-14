@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -27,17 +28,13 @@ public class Call implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name ="order_id")
-    private Order order;
-
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "deliveryman_id")
     private DeliveryMan deliveryman;
 
-    @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "client_id")
-    private Client client;
+    @OneToOne(cascade = CascadeType.MERGE, optional = false)
+    @JoinColumn(name = "order_id")
+    private Order order;
 
     @Enumerated(EnumType.STRING)
     private CallStatus callStatus;

@@ -1,5 +1,7 @@
 package com.coursework.demo.controller;
 
+import com.coursework.demo.dto.AddDeliveryManDTO;
+import com.coursework.demo.dto.DeliveryInfoDTO;
 import com.coursework.demo.dto.DeliveryManDTO;
 import com.coursework.demo.entity.DeliveryMan;
 import com.coursework.demo.mapper.DeliveryManMapper;
@@ -9,7 +11,6 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
+import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
 @RestController
 @Api(tags = "DeliveryMan API")
@@ -40,7 +46,14 @@ public class DeliveryManController {
     @ApiOperation(value = "Get deliveryman info by id")
     public ResponseEntity<DeliveryManDTO> get(@PathVariable("id") long id) {
         DeliveryMan deliveryMan = deliveryManService.getById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(deliveryManMapper.convertToDto(deliveryMan));
+        return ResponseEntity.status(OK).body(deliveryManMapper.convertToDto(deliveryMan));
+    }
+
+
+    @GetMapping("orders/{id}")
+    @ApiOperation(value = "Get delivery info by order id")
+    public ResponseEntity<DeliveryInfoDTO> getDeliveryInfoByOrders(@PathVariable("id") long id) {
+        return ResponseEntity.status(OK).body(deliveryManService.getDeliveryInfoByOrderId(id));
     }
 
 
@@ -53,9 +66,9 @@ public class DeliveryManController {
 
     @PostMapping
     @ApiOperation(value = "Create new deliveryman")
-    public ResponseEntity<DeliveryManDTO> save(@RequestBody DeliveryManDTO deliveryManDTO) {
-        DeliveryMan deliveryMan = deliveryManService.save(deliveryManMapper.convertToEntity(deliveryManDTO));
-        return ResponseEntity.status(HttpStatus.CREATED).body(deliveryManMapper.convertToDto(deliveryMan));
+    public ResponseEntity<DeliveryManDTO> save(@RequestBody AddDeliveryManDTO addDeliveryManDTO) {
+        DeliveryMan deliveryMan = deliveryManService.save(deliveryManMapper.convertToEntity(addDeliveryManDTO));
+        return ResponseEntity.status(CREATED).body(deliveryManMapper.convertToDto(deliveryMan));
     }
 
     @PutMapping("/{id}")
@@ -63,9 +76,9 @@ public class DeliveryManController {
     public ResponseEntity<DeliveryManDTO> update(@PathVariable("id") long id, @RequestBody DeliveryManDTO deliveryManDTO) {
         if (id == deliveryManDTO.getId()) {
             DeliveryMan deliveryMan = deliveryManService.update(deliveryManMapper.convertToEntity(deliveryManDTO));
-            return ResponseEntity.status(HttpStatus.OK).body(deliveryManMapper.convertToDto(deliveryMan));
+            return ResponseEntity.status(OK).body(deliveryManMapper.convertToDto(deliveryMan));
         } else {
-            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
+            return ResponseEntity.status(UNPROCESSABLE_ENTITY).build();
         }
     }
 
@@ -74,6 +87,6 @@ public class DeliveryManController {
     public ResponseEntity delete(@PathVariable("id") long id) {
         DeliveryMan deliveryMan = deliveryManService.getById(id);
         deliveryManService.delete(deliveryMan);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.status(NO_CONTENT).build();
     }
 }

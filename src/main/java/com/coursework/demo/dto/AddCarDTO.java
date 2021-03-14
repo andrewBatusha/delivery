@@ -5,8 +5,7 @@ import com.coursework.demo.entity.enums.CarStatus;
 import lombok.Data;
 
 @Data
-public class CarDTO {
-    private Long id;
+public class AddCarDTO {
 
     private String model;
 

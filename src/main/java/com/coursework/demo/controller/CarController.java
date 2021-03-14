@@ -1,5 +1,6 @@
 package com.coursework.demo.controller;
 
+import com.coursework.demo.dto.AddCarDTO;
 import com.coursework.demo.dto.CarDTO;
 import com.coursework.demo.entity.Car;
 import com.coursework.demo.mapper.CarMapper;
@@ -9,7 +10,6 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +21,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
+import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
 @RestController
 @Api(tags = "Car API")
@@ -40,7 +45,7 @@ public class CarController {
     @ApiOperation(value = "Get car info by id")
     public ResponseEntity<CarDTO> get(@PathVariable("id") long id) {
         Car car = carService.getById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(carMapper.convertToDto(car));
+        return ResponseEntity.status(OK).body(carMapper.convertToDto(car));
     }
 
 
@@ -53,9 +58,9 @@ public class CarController {
 
     @PostMapping
     @ApiOperation(value = "Create new car")
-    public ResponseEntity<CarDTO> save(@RequestBody CarDTO passportDTO) {
-        Car car = carService.save(carMapper.convertToEntity(passportDTO));
-        return ResponseEntity.status(HttpStatus.CREATED).body(carMapper.convertToDto(car));
+    public ResponseEntity<CarDTO> save(@RequestBody AddCarDTO addCarDTO) {
+        Car car = carService.save(carMapper.convertToEntity(addCarDTO));
+        return ResponseEntity.status(CREATED).body(carMapper.convertToDto(car));
     }
 
     @PutMapping("/{id}")
@@ -63,9 +68,9 @@ public class CarController {
     public ResponseEntity<CarDTO> update(@PathVariable("id") long id, @RequestBody CarDTO carDTO) {
         if (id == carDTO.getId()) {
             Car car = carService.update(carMapper.convertToEntity(carDTO));
-            return ResponseEntity.status(HttpStatus.OK).body(carMapper.convertToDto(car));
+            return ResponseEntity.status(OK).body(carMapper.convertToDto(car));
         } else {
-            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
+            return ResponseEntity.status(UNPROCESSABLE_ENTITY).build();
         }
     }
 
@@ -74,6 +79,6 @@ public class CarController {
     public ResponseEntity delete(@PathVariable("id") long id) {
         Car car = carService.getById(id);
         carService.delete(car);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.status(NO_CONTENT).build();
     }
 }

@@ -1,5 +1,6 @@
 package com.coursework.demo.service.impl;
 
+import com.coursework.demo.dto.OrderWithStatusDTO;
 import com.coursework.demo.entity.Order;
 import com.coursework.demo.repository.OrderRepository;
 import com.coursework.demo.service.OrderService;
@@ -19,6 +20,11 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     public OrderServiceImpl(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
+    }
+
+    @Override
+    public List<OrderWithStatusDTO> getOrdersAndCallStatusByClient(Long clientId, Pageable pageable) {
+        return orderRepository.getOrdersAndCallStatusByClient(clientId, pageable);
     }
 
     @Override

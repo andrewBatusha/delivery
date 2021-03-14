@@ -5,8 +5,7 @@ import com.coursework.demo.entity.enums.PaymentOption;
 import lombok.Data;
 
 @Data
-public class OrderDTO {
-    private Long id;
+public class AddOrderDTO {
 
     private String description;
 

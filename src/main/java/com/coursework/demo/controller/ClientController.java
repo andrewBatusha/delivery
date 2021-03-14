@@ -1,5 +1,6 @@
 package com.coursework.demo.controller;
 
+import com.coursework.demo.dto.AddClientDTO;
 import com.coursework.demo.dto.ClientDTO;
 import com.coursework.demo.entity.Client;
 import com.coursework.demo.mapper.ClientMapper;
@@ -9,7 +10,6 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +21,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
+import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
 @RestController
 @Api(tags = "Client API")
@@ -41,7 +46,7 @@ public class ClientController {
     @ApiOperation(value = "Get client info by id")
     public ResponseEntity<ClientDTO> get(@PathVariable("id") long id){
         Client client = clientService.getById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(clientMapper.convertToDto(client));
+        return ResponseEntity.status(OK).body(clientMapper.convertToDto(client));
     }
 
 
@@ -54,9 +59,9 @@ public class ClientController {
 
     @PostMapping
     @ApiOperation(value = "Create new client")
-    public ResponseEntity<ClientDTO> save(@RequestBody ClientDTO clientDTO) {
-        Client client = clientService.save(clientMapper.convertToEntity(clientDTO));
-        return ResponseEntity.status(HttpStatus.CREATED).body(clientMapper.convertToDto(client));
+    public ResponseEntity<ClientDTO> save(@RequestBody AddClientDTO addClientDTO) {
+        Client client = clientService.save(clientMapper.convertToEntity(addClientDTO));
+        return ResponseEntity.status(CREATED).body(clientMapper.convertToDto(client));
     }
 
     @PutMapping("/{id}")
@@ -64,9 +69,9 @@ public class ClientController {
     public ResponseEntity<ClientDTO> update(@PathVariable("id") long id, @RequestBody ClientDTO clientDTO) {
         if (id == clientDTO.getId()) {
             Client client = clientService.update(clientMapper.convertToEntity(clientDTO));
-            return ResponseEntity.status(HttpStatus.OK).body(clientMapper.convertToDto(client));
+            return ResponseEntity.status(OK).body(clientMapper.convertToDto(client));
         } else {
-            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
+            return ResponseEntity.status(UNPROCESSABLE_ENTITY).build();
         }
     }
 
@@ -75,6 +80,6 @@ public class ClientController {
     public ResponseEntity delete(@PathVariable("id") long id){
         Client client = clientService.getById(id);
         clientService.delete(client);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.status(NO_CONTENT).build();
     }
 }

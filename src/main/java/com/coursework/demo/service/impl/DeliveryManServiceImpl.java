@@ -1,5 +1,6 @@
 package com.coursework.demo.service.impl;
 
+import com.coursework.demo.dto.DeliveryInfoDTO;
 import com.coursework.demo.entity.DeliveryMan;
 import com.coursework.demo.repository.DeliveryManRepository;
 import com.coursework.demo.service.DeliveryManService;
@@ -19,6 +20,11 @@ public class DeliveryManServiceImpl implements DeliveryManService {
     @Autowired
     public DeliveryManServiceImpl(DeliveryManRepository deliveryManRepository) {
         this.deliveryManRepository = deliveryManRepository;
+    }
+
+    @Override
+    public DeliveryInfoDTO getDeliveryInfoByOrderId(Long orderId) {
+        return deliveryManRepository.getDeliveryInfoByOrderId(orderId);
     }
 
     @Override

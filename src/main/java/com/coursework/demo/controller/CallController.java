@@ -1,5 +1,6 @@
 package com.coursework.demo.controller;
 
+import com.coursework.demo.dto.AddCallDTO;
 import com.coursework.demo.dto.CallDTO;
 import com.coursework.demo.entity.Call;
 import com.coursework.demo.mapper.CallMapper;
@@ -9,7 +10,6 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +21,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
+import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
 @RestController
 @Api(tags = "Call API")
@@ -40,7 +45,7 @@ public class CallController {
     @ApiOperation(value = "Get call info by id")
     public ResponseEntity<CallDTO> get(@PathVariable("id") long id) {
         Call call = callService.getById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(callMapper.convertToDto(call));
+        return ResponseEntity.status(OK).body(callMapper.convertToDto(call));
     }
 
 
@@ -53,9 +58,9 @@ public class CallController {
 
     @PostMapping
     @ApiOperation(value = "Create new call")
-    public ResponseEntity<CallDTO> save(@RequestBody CallDTO callDTO) {
-        Call call = callService.save(callMapper.convertToEntity(callDTO));
-        return ResponseEntity.status(HttpStatus.CREATED).body(callMapper.convertToDto(call));
+    public ResponseEntity<CallDTO> save(@RequestBody AddCallDTO addCallDTO) {
+        Call call = callService.save(callMapper.convertToEntity(addCallDTO));
+        return ResponseEntity.status(CREATED).body(callMapper.convertToDto(call));
     }
 
     @PutMapping("/{id}")
@@ -63,9 +68,9 @@ public class CallController {
     public ResponseEntity<CallDTO> update(@PathVariable("id") long id, @RequestBody CallDTO callDTO) {
         if (id == callDTO.getId()) {
             Call call = callService.update(callMapper.convertToEntity(callDTO));
-            return ResponseEntity.status(HttpStatus.OK).body(callMapper.convertToDto(call));
+            return ResponseEntity.status(OK).body(callMapper.convertToDto(call));
         } else {
-            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
+            return ResponseEntity.status(UNPROCESSABLE_ENTITY).build();
         }
     }
 
@@ -74,6 +79,6 @@ public class CallController {
     public ResponseEntity delete(@PathVariable("id") long id) {
         Call call = callService.getById(id);
         callService.delete(call);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.status(NO_CONTENT).build();
     }
 }
