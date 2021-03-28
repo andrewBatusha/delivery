@@ -67,7 +67,7 @@ public class CarController {
     @ApiOperation(value = "Update existing car by id")
     public ResponseEntity<CarDTO> update(@PathVariable("id") long id, @RequestBody CarDTO carDTO) {
         if (id == carDTO.getId()) {
-            Car car = carService.update(carMapper.convertToEntity(carDTO));
+            Car car = carService.save(carMapper.convertToEntity(carDTO));
             return ResponseEntity.status(OK).body(carMapper.convertToDto(car));
         } else {
             return ResponseEntity.status(UNPROCESSABLE_ENTITY).build();

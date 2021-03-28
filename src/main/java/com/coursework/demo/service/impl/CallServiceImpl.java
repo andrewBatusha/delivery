@@ -32,11 +32,6 @@ public class CallServiceImpl implements CallService {
     }
 
     @Override
-    public Call update(Call object) {
-        return callRepository.save(object);
-    }
-
-    @Override
     public Call save(Call object) {
         return callRepository.save(object);
     }

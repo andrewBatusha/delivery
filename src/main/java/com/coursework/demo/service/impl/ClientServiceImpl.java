@@ -32,11 +32,6 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Client update(Client object) {
-        return clientRepository.save(object);
-    }
-
-    @Override
     public Client save(Client object) {
         return clientRepository.save(object);
     }

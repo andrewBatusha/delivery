@@ -73,7 +73,7 @@ public class OrderController {
     @ApiOperation(value = "Update existing order by id")
     public ResponseEntity<OrderDTO> update(@PathVariable("id") long id, @RequestBody OrderDTO orderDTO) {
         if (id == orderDTO.getId()) {
-            Order order = orderService.update(orderMapper.convertToEntity(orderDTO));
+            Order order = orderService.save(orderMapper.convertToEntity(orderDTO));
             return ResponseEntity.status(OK).body(orderMapper.convertToDto(order));
         } else {
             return ResponseEntity.status(UNPROCESSABLE_ENTITY).build();

@@ -32,11 +32,6 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public Car update(Car object) {
-        return carRepository.save(object);
-    }
-
-    @Override
     public Car save(Car object) {
         return carRepository.save(object);
     }

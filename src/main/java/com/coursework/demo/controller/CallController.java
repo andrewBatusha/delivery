@@ -67,7 +67,7 @@ public class CallController {
     @ApiOperation(value = "Update existing call by id")
     public ResponseEntity<CallDTO> update(@PathVariable("id") long id, @RequestBody CallDTO callDTO) {
         if (id == callDTO.getId()) {
-            Call call = callService.update(callMapper.convertToEntity(callDTO));
+            Call call = callService.save(callMapper.convertToEntity(callDTO));
             return ResponseEntity.status(OK).body(callMapper.convertToDto(call));
         } else {
             return ResponseEntity.status(UNPROCESSABLE_ENTITY).build();

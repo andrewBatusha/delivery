@@ -75,7 +75,7 @@ public class DeliveryManController {
     @ApiOperation(value = "Update existing deliveryman by id")
     public ResponseEntity<DeliveryManDTO> update(@PathVariable("id") long id, @RequestBody DeliveryManDTO deliveryManDTO) {
         if (id == deliveryManDTO.getId()) {
-            DeliveryMan deliveryMan = deliveryManService.update(deliveryManMapper.convertToEntity(deliveryManDTO));
+            DeliveryMan deliveryMan = deliveryManService.save(deliveryManMapper.convertToEntity(deliveryManDTO));
             return ResponseEntity.status(OK).body(deliveryManMapper.convertToDto(deliveryMan));
         } else {
             return ResponseEntity.status(UNPROCESSABLE_ENTITY).build();

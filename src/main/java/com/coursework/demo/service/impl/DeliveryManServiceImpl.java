@@ -38,11 +38,6 @@ public class DeliveryManServiceImpl implements DeliveryManService {
     }
 
     @Override
-    public DeliveryMan update(DeliveryMan object) {
-        return deliveryManRepository.save(object);
-    }
-
-    @Override
     public DeliveryMan save(DeliveryMan object) {
         return deliveryManRepository.save(object);
     }

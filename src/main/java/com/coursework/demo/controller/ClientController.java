@@ -68,7 +68,7 @@ public class ClientController {
     @ApiOperation(value = "Update existing client by id")
     public ResponseEntity<ClientDTO> update(@PathVariable("id") long id, @RequestBody ClientDTO clientDTO) {
         if (id == clientDTO.getId()) {
-            Client client = clientService.update(clientMapper.convertToEntity(clientDTO));
+            Client client = clientService.save(clientMapper.convertToEntity(clientDTO));
             return ResponseEntity.status(OK).body(clientMapper.convertToDto(client));
         } else {
             return ResponseEntity.status(UNPROCESSABLE_ENTITY).build();
