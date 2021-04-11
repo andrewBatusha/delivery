@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 public class ClientServiceImpl implements ClientService {
 
-    ClientRepository clientRepository;
+    private ClientRepository clientRepository;
 
     @Autowired
     public ClientServiceImpl(ClientRepository clientRepository) {

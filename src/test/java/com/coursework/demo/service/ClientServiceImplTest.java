@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static com.coursework.demo.TestData.getClient;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doNothing;
@@ -79,12 +80,5 @@ public class ClientServiceImplTest {
 
         assertEquals(client, result);
         verify(clientRepository).delete(client);
-    }
-
-    private Client getClient() {
-        return Client.builder()
-                .address("Main Street")
-                .name("John")
-                .build();
     }
 }

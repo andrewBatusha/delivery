@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 public class CarServiceImpl implements CarService {
 
-    CarRepository carRepository;
+    private CarRepository carRepository;
 
     @Autowired
     public CarServiceImpl(CarRepository carRepository) {

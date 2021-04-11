@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 public class CallServiceImpl implements CallService {
 
-    CallRepository callRepository;
+    private CallRepository callRepository;
 
     @Autowired
     public CallServiceImpl(CallRepository callRepository) {

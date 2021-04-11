@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static com.coursework.demo.TestData.getOrder;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doNothing;
@@ -100,13 +101,5 @@ public class OrderServiceImplTest {
 
         assertEquals(order, result);
         verify(orderRepository).delete(order);
-    }
-
-    private Order getOrder() {
-        return Order.builder()
-                .bonus(50L)
-                .description("2 pizza")
-                .price(250L)
-                .build();
     }
 }

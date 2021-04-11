@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 public class DeliveryManServiceImpl implements DeliveryManService {
 
-    DeliveryManRepository deliveryManRepository;
+    private DeliveryManRepository deliveryManRepository;
 
     @Autowired
     public DeliveryManServiceImpl(DeliveryManRepository deliveryManRepository) {

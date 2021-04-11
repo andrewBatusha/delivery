@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static com.coursework.demo.TestData.getCar;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doNothing;
@@ -80,13 +81,5 @@ public class CarServiceImplTest {
 
         assertEquals(car, result);
         verify(carRepository).delete(car);
-    }
-
-    private Car getCar() {
-        return Car.builder()
-                .carStatus(CarStatus.BUSY)
-                .colour("black")
-                .model("BMW")
-                .build();
     }
 }

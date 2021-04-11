@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static com.coursework.demo.TestData.getDeliveryMan;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doNothing;
@@ -97,13 +98,5 @@ public class DeliveryManServiceImplTest {
 
         assertEquals(deliveryMan, result);
         verify(deliveryManRepository).delete(deliveryMan);
-    }
-
-    private DeliveryMan getDeliveryMan() {
-        return DeliveryMan.builder()
-                .age(18)
-                .name("John")
-                .wages(25)
-                .build();
     }
 }
