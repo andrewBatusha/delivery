@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,6 +52,7 @@ public class ClientController {
 
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN, USER')")
     @ApiOperation(value = "Get the list of all clients")
     public ResponseEntity<List<ClientDTO>> getList(@PageableDefault(sort = {"id"}) Pageable pageable) {
         return ResponseEntity.ok().body(clientMapper.convertToDtoList(clientService.getAll(pageable)));
@@ -58,6 +60,7 @@ public class ClientController {
 
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     @ApiOperation(value = "Create new client")
     public ResponseEntity<ClientDTO> save(@RequestBody AddClientDTO addClientDTO) {
         Client client = clientService.save(clientMapper.convertToEntity(addClientDTO));
@@ -65,6 +68,7 @@ public class ClientController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @ApiOperation(value = "Update existing client by id")
     public ResponseEntity<ClientDTO> update(@PathVariable("id") long id, @RequestBody ClientDTO clientDTO) {
         if (id == clientDTO.getId()) {
@@ -76,6 +80,7 @@ public class ClientController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @ApiOperation(value = "Delete client by id")
     public ResponseEntity delete(@PathVariable("id") long id){
         Client client = clientService.getById(id);

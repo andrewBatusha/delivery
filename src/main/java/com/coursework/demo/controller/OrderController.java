@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,6 +44,7 @@ public class OrderController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN, USER')")
     @ApiOperation(value = "Get order info by id")
     public ResponseEntity<OrderDTO> get(@PathVariable("id") long id) {
         Order order = orderService.getById(id);
@@ -51,18 +53,21 @@ public class OrderController {
 
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN, USER')")
     @ApiOperation(value = "Get the list of all orders")
     public ResponseEntity<List<OrderDTO>> getList(@PageableDefault(sort = {"id"}) Pageable pageable) {
         return ResponseEntity.ok().body(orderMapper.convertToDtoList(orderService.getAll(pageable)));
     }
 
     @GetMapping("clients/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN, USER')")
     @ApiOperation(value = "Get the list of all orders and their statuses by client id")
     public ResponseEntity<List<OrderWithStatusDTO>> getList(@PathVariable("id") long id, @PageableDefault(sort = {"id"}) Pageable pageable) {
         return ResponseEntity.ok().body(orderService.getOrdersAndCallStatusByClient(id, pageable));
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     @ApiOperation(value = "Create new order")
     public ResponseEntity<OrderDTO> save(@RequestBody AddOrderDTO addOrderDTO) {
         Order order = orderService.save(orderMapper.convertToEntity(addOrderDTO));
@@ -70,6 +75,7 @@ public class OrderController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @ApiOperation(value = "Update existing order by id")
     public ResponseEntity<OrderDTO> update(@PathVariable("id") long id, @RequestBody OrderDTO orderDTO) {
         if (id == orderDTO.getId()) {
@@ -81,6 +87,7 @@ public class OrderController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @ApiOperation(value = "Delete order by id")
     public ResponseEntity delete(@PathVariable("id") long id) {
         Order order = orderService.getById(id);

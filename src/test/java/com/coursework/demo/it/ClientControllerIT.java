@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Collections;
@@ -48,6 +49,7 @@ public class ClientControllerIT {
     private ClientRepository clientRepository;
 
     @Test
+    @WithMockUser(roles = "USER")
     public void testRetrieveClientById() throws Exception {
         when(clientRepository.findById(anyLong())).thenReturn(Optional.of(getClient()));
 
@@ -57,6 +59,7 @@ public class ClientControllerIT {
     }
 
     @Test
+    @WithMockUser(roles = "USER")
     public void testRetrieveClientList() throws Exception {
         final Client client = getClient();
         final List<Client> clients = Collections.singletonList(client);
@@ -71,6 +74,7 @@ public class ClientControllerIT {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     public void testSaveClient() throws Exception {
         final Client client = getClient();
         final ClientDTO request = getClientRequest();
@@ -83,6 +87,7 @@ public class ClientControllerIT {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     public void testUpdateClient() throws Exception {
         final Client client = getClient();
         final ClientDTO request = getClientRequest();
@@ -95,6 +100,7 @@ public class ClientControllerIT {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     public void testUpdateClientExpectedBadRequest() throws Exception {
         final Client client = getClient();
         final ClientDTO request = getClientRequest();
@@ -106,6 +112,7 @@ public class ClientControllerIT {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     public void testDeleteClient() throws Exception {
         final Client client = getClient();
 

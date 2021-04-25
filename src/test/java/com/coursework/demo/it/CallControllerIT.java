@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Collections;
@@ -48,6 +49,7 @@ public class CallControllerIT {
     private CallRepository callRepository;
 
     @Test
+    @WithMockUser(roles = "USER")
     public void testRetrieveCallById() throws Exception {
         when(callRepository.findById(anyLong())).thenReturn(Optional.of(getCall()));
 
@@ -57,6 +59,7 @@ public class CallControllerIT {
     }
 
     @Test
+    @WithMockUser(roles = "USER")
     public void testRetrieveCallList() throws Exception {
         final Call call = getCall();
         final List<Call> calls = Collections.singletonList(call);
@@ -71,6 +74,7 @@ public class CallControllerIT {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     public void testSaveCall() throws Exception {
         final Call call = getCall();
         final CallDTO request = getCallRequest();
@@ -83,6 +87,7 @@ public class CallControllerIT {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     public void testUpdateCall() throws Exception {
         final Call call = getCall();
         final CallDTO request = getCallRequest();
@@ -95,6 +100,7 @@ public class CallControllerIT {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     public void testUpdateCallExpectedBadRequest() throws Exception {
         final Call call = getCall();
         final CallDTO request = getCallRequest();
@@ -106,6 +112,7 @@ public class CallControllerIT {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     public void testDeleteCall() throws Exception {
         final Call call = getCall();
 

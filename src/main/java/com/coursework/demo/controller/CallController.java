@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,6 +43,7 @@ public class CallController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN, USER')")
     @ApiOperation(value = "Get call info by id")
     public ResponseEntity<CallDTO> get(@PathVariable("id") long id) {
         Call call = callService.getById(id);
@@ -50,6 +52,7 @@ public class CallController {
 
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN, USER')")
     @ApiOperation(value = "Get the list of all calls")
     public ResponseEntity<List<CallDTO>> getList(@PageableDefault(sort = {"id"}) Pageable pageable) {
         return ResponseEntity.ok().body(callMapper.convertToDtoList(callService.getAll(pageable)));
@@ -57,6 +60,7 @@ public class CallController {
 
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     @ApiOperation(value = "Create new call")
     public ResponseEntity<CallDTO> save(@RequestBody AddCallDTO addCallDTO) {
         Call call = callService.save(callMapper.convertToEntity(addCallDTO));
@@ -64,6 +68,7 @@ public class CallController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @ApiOperation(value = "Update existing call by id")
     public ResponseEntity<CallDTO> update(@PathVariable("id") long id, @RequestBody CallDTO callDTO) {
         if (id == callDTO.getId()) {
@@ -75,6 +80,7 @@ public class CallController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @ApiOperation(value = "Delete call by id")
     public ResponseEntity delete(@PathVariable("id") long id) {
         Call call = callService.getById(id);

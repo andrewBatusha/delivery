@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Collections;
@@ -48,6 +49,7 @@ public class CarControllerIT {
     private CarRepository carRepository;
 
     @Test
+    @WithMockUser(roles = "USER")
     public void testRetrieveCarById() throws Exception {
         when(carRepository.findById(anyLong())).thenReturn(Optional.of(getCar()));
 
@@ -57,6 +59,7 @@ public class CarControllerIT {
     }
 
     @Test
+    @WithMockUser(roles = "USER")
     public void testRetrieveCarList() throws Exception {
         final Car car = getCar();
         final List<Car> cars = Collections.singletonList(car);
@@ -71,6 +74,7 @@ public class CarControllerIT {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     public void testSaveCar() throws Exception {
         final Car car = getCar();
         final CarDTO request = getCarRequest();
@@ -83,6 +87,7 @@ public class CarControllerIT {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     public void testUpdateCar() throws Exception {
         final Car car = getCar();
         final CarDTO request = getCarRequest();
@@ -95,6 +100,7 @@ public class CarControllerIT {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     public void testUpdateCarExpectedBadRequest() throws Exception {
         final Car car = getCar();
         final CarDTO request = getCarRequest();
@@ -106,6 +112,7 @@ public class CarControllerIT {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     public void testDeleteCar() throws Exception {
         final Car car = getCar();
 

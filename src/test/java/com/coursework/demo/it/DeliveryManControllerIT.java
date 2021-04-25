@@ -15,6 +15,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Collections;
@@ -50,6 +51,7 @@ public class DeliveryManControllerIT {
     private DeliveryManRepository deliveryManRepository;
 
     @Test
+    @WithMockUser(roles = "USER")
     public void testRetrieveDeliveryManById() throws Exception {
         when(deliveryManRepository.findById(anyLong())).thenReturn(Optional.of(getDeliveryMan()));
 
@@ -59,6 +61,7 @@ public class DeliveryManControllerIT {
     }
 
     @Test
+    @WithMockUser(roles = "USER")
     public void testRetrieveDeliveryInfoDtoByOrderId() throws Exception {
         final DeliveryInfoDTO dto = getDeliveryInfoDto();
         when(deliveryManRepository.getDeliveryInfoByOrderId(1L)).thenReturn(dto);
@@ -69,6 +72,7 @@ public class DeliveryManControllerIT {
     }
 
     @Test
+    @WithMockUser(roles = "USER")
     public void testRetrieveDeliveryManList() throws Exception {
         final DeliveryMan deliveryMan = getDeliveryMan();
         final List<DeliveryMan> deliveryMans = Collections.singletonList(deliveryMan);
@@ -83,6 +87,7 @@ public class DeliveryManControllerIT {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     public void testSaveDeliveryMan() throws Exception {
         final DeliveryMan deliveryMan = getDeliveryMan();
         final DeliveryManDTO request = getDeliveryManRequest();
@@ -95,6 +100,7 @@ public class DeliveryManControllerIT {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     public void testUpdateDeliveryMan() throws Exception {
         final DeliveryMan deliveryMan = getDeliveryMan();
         final DeliveryManDTO request = getDeliveryManRequest();
@@ -107,6 +113,7 @@ public class DeliveryManControllerIT {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     public void testUpdateDeliveryManExpectedBadRequest() throws Exception {
         final DeliveryMan deliveryMan = getDeliveryMan();
         final DeliveryManDTO request = getDeliveryManRequest();
@@ -118,6 +125,7 @@ public class DeliveryManControllerIT {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     public void testDeleteDeliveryMan() throws Exception {
         final DeliveryMan deliveryMan = getDeliveryMan();
 
